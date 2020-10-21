@@ -17,18 +17,22 @@ const Feed = ({ feeds, user, posts }) => {
     "https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg";
 
   const addPost = () => {
-    if (newPost !== "" || chosenEmoji!=="") {
+    if (chosenEmoji.emoji !== undefined) {
       feeds(images, user.name, newPost + chosenEmoji.emoji);
-     
+      console.log(chosenEmoji.emoji);
+      setChosenEmoji(null);
+      setEmoji(false);
+    } else {
+      feeds(images, user.name, newPost);
+
       setChosenEmoji(null);
       setEmoji(false);
     }
- 
   };
 
-    if (user.name === undefined) {
-      return <Redirect to="/" />;
-    }
+  if (user.name === undefined) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="feeds-container">
       <div className="feeds-box">
@@ -52,21 +56,18 @@ const Feed = ({ feeds, user, posts }) => {
               onChange={(e) => setNewText(e.target.value)}
             ></textarea>
           </div>
-          <div className="emoji-button" onClick={() => setEmoji(!emoji)} >
-        <span role="img" aria-label="happy-emoji">
-          &#128515;
-        </span>
-      </div>
-   
-         
+          <div className="emoji-button" onClick={() => setEmoji(!emoji)}>
+            <span role="img" aria-label="happy-emoji">
+              &#128515;
+            </span>
+          </div>
+
           <div className="feeds-post-button" onClick={addPost}>
             POST
           </div>
         </div>
-        <div
-  className="emoji-container"
-        >
- {chosenEmoji ? (
+        <div className="emoji-container">
+          {chosenEmoji ? (
             <span>You chose: {chosenEmoji.emoji}</span>
           ) : (
             <span></span>
@@ -77,7 +78,6 @@ const Feed = ({ feeds, user, posts }) => {
           ) : (
             <span></span>
           )}
-
         </div>
         {posts.map((posts) => (
           <div className="posts-container">
