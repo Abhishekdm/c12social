@@ -26,9 +26,9 @@ const Feed = ({ feeds, user, posts }) => {
  
   };
 
-    // if (user.name === undefined) {
-    //   return <Redirect to="/" />;
-    // }
+    if (user.name === undefined) {
+      return <Redirect to="/" />;
+    }
   return (
     <div className="feeds-container">
       <div className="feeds-box">
